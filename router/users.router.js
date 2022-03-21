@@ -15,7 +15,7 @@ routerUsers.route('/');
 
 routerUsers
   .route('/:id')
-  .get(permission(), getUser)
+  .get(getUser)
   .put(permission(), updateUser)
   .delete(permission(), deleteUser);
 

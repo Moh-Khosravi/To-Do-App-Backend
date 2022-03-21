@@ -56,7 +56,9 @@ export async function deleteUser(req, res) {
 
 export async function login(req, res) {
   const { email, password } = req.body;
-  const user = await User.findOne({ email }).select('+password');
+  const user = await User.findOne({ email })
+    .select('+password')
+    .populate('todos');
   try {
     if (!user) {
       res.status(400).send('User not found');
@@ -68,6 +70,13 @@ export async function login(req, res) {
       res.status(200).json({
         message: 'Login successful',
         token: token,
+        user: {
+          id: user._id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          todos: user.todos,
+        },
       });
     } else {
       res.status(400).send('Password incorrect');
