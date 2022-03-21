@@ -7,12 +7,17 @@ import {
   login,
   register,
 } from '../controller/users.controller.js';
+import { permission } from '../middleware/Permission.js';
 
 const routerUsers = new Router();
 
 routerUsers.route('/');
 
-routerUsers.route('/:id').get(getUser).put(updateUser).delete(deleteUser);
+routerUsers
+  .route('/:id')
+  .get(permission(), getUser)
+  .put(permission(), updateUser)
+  .delete(permission(), deleteUser);
 
 routerUsers.route('/login').post(login);
 routerUsers

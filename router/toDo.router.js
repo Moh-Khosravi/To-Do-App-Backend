@@ -7,6 +7,7 @@ import {
   getToDo,
 } from '../controller/toDo.controller.js';
 import validator from 'validator';
+import { permission } from '../middleware/Permission.js';
 
 const routerToDo = new Router();
 
@@ -32,10 +33,14 @@ routerToDo.route('/').post(
     })
     .optional({ checkFalsy: true, nullable: true })
     .withMessage('End date must be after start date'),
-
+  permission(),
   postToDo
 );
 
-routerToDo.route('/:id').get(getToDo).put(updateToDo).delete(deleteToDo);
+routerToDo
+  .route('/:id')
+  .get(permission(), getToDo)
+  .put(permission(), updateToDo)
+  .delete(permission(), deleteToDo);
 
 export default routerToDo;

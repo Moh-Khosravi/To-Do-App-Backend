@@ -4,6 +4,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import routerUsers from './router/users.router.js';
 import routerToDo from './router/toDo.router.js';
+import { auth } from './middleware/AuthMiddleware.js';
 
 const corsOption = {
   origin: process.env.ORIGIN_URL,
@@ -24,6 +25,8 @@ const app = express();
 app.use(express.json());
 
 app.use(cors(corsOption));
+
+app.use(auth());
 
 app.use('/users', routerUsers);
 app.use('/ToDos', routerToDo);
