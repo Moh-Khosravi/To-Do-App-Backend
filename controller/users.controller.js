@@ -17,27 +17,6 @@ export async function getUser(req, res) {
   res.status(200).json(user);
 }
 
-// post User
-
-export async function postUser(req, res) {
-  const errors = validationResult(req);
-  if (errors.isEmpty()) {
-    try {
-      const user = new User(req.body);
-      await user.save();
-      res.status(200).send(user);
-    } catch (err) {
-      res.status(400).json(err);
-      return;
-    }
-  } else {
-    res.status(406).json({
-      message: 'Invalid input',
-      errors: errors.array(),
-    });
-  }
-}
-
 // update User
 
 export async function updateUser(req, res) {
@@ -50,7 +29,7 @@ export async function updateUser(req, res) {
   }
 
   try {
-    await User.findOneAndUpdate({ _id: id }, updateBody);
+    await User.findOneAndUpdate({ _id: id }, updatedUser);
     res.status(200).send('User updated');
   } catch (err) {
     res.status(400).send(err);
