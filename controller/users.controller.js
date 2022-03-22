@@ -14,7 +14,16 @@ export async function getUser(req, res) {
     return;
   }
 
-  res.status(200).json(user);
+  res.status(200).json({
+    message: 'User found',
+    user: {
+      id: user._id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      todos: user.todos,
+    },
+  });
 }
 
 // update User

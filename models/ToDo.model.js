@@ -12,6 +12,9 @@ const toDoSchema = new Schema({
   endDate: {
     type: String,
   },
+  completed: {
+    type: Boolean,
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
